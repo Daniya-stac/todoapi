@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Todo App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="page">
+
+  <header>
+    <h1>Todo List</h1>
+    <p>localhost:8000/todos</p>
+  </header>
+
+  <!-- Add task form -->
+  <div class="form-card">
+    <h2>Новая задача</h2>
+    <div class="form-row">
+      <div class="form-group" style="flex:1; min-width:200px;">
+        <label>description</label>
+        <input type="text" id="new-desc" placeholder="Описание задачи..." maxlength="30" />
+      </div>
+      <div class="form-group">
+        <label>date (опционально)</label>
+        <input type="datetime-local" id="new-date" />
+      </div>
+      <button class="btn btn-primary" onclick="createTodo()">+ добавить</button>
+    </div>
+  </div>
+
+  <!-- Filters -->
+  <div class="filters">
+    <button class="filter-btn active" data-filter="all" onclick="setFilter('all', this)">все</button>
+    <button class="filter-btn" data-filter="active" onclick="setFilter('active', this)">активные</button>
+    <button class="filter-btn" data-filter="done" onclick="setFilter('done', this)">выполненные</button>
+    <span class="filter-count" id="count-label"></span>
+  </div>
+
+  <!-- List -->
+  <div class="todo-list" id="todo-list">
+    <div class="loading-row"><span class="spinner"></span> загрузка...</div>
+  </div>
+
+</div>
+
+<div id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
