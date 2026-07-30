@@ -1,9 +1,19 @@
 import uvicorn
 from fastapi import FastAPI
+from backend.routers import handles
+from contextlib import asynccontextmanager
 from starlette.middleware.cors import CORSMiddleware
-from backend.routers import rout
+from backend.database.conf import create_db_and_tables
 
-app = FastAPI(title="Todo API")
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    create_db_and_tables()
+    yield
+
+
+app = FastAPI(title="Todo API",
+              lifespan=lifespan)
 
 origins = ["*"]
 
@@ -15,7 +25,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(rout.router)
+app.include_router(handles.router)
 
 if __name__ == '__main__':
-    uvicorn.run(f'main:app', reload=True)
+    uvicorn.run('main:app', reload=True)
