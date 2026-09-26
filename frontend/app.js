@@ -4,7 +4,7 @@ let currentFilter = 'all';
 
 async function fetchTodos() {
   try {
-    const res = await fetch(`${API}/`);
+    const res = await fetch(`${API}/?offset=0&limit=100`);
     if (!res.ok) throw new Error('Ошибка сервера');
     todos = await res.json();
     render();
@@ -146,7 +146,7 @@ function render() {
             ${t.completed ? `<span class="badge-done">выполнено</span>` : ''}
           </div>
           <div class="edit-row" id="edit-row-${t.id}" style="display:none;">
-            <input type="text" id="edit-desc-${t.id}" value="${escHtml(t.description)}" maxlength="30" style="flex:1; min-width:150px;" />
+            <input type="text" id="edit-desc-${t.id}" value="${escHtml(t.description)}" style="flex:1; min-width:150px;" />
             <input type="datetime-local" id="edit-date-${t.id}" value="${dtLocal}" />
             <button class="btn btn-primary btn-sm" onclick="saveEdit(${t.id})">сохранить</button>
             <button class="btn btn-sm" onclick="toggleEdit(${t.id})">отмена</button>
