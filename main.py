@@ -1,5 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
+from fastapi.staticfiles import StaticFiles
 from backend.routers import handles
 from contextlib import asynccontextmanager
 from starlette.middleware.cors import CORSMiddleware
@@ -26,6 +27,7 @@ app.add_middleware(
 )
 
 app.include_router(handles.router)
+app.mount("/", StaticFiles(directory="frontend", html=True), name="frontend")
 
 if __name__ == '__main__':
     uvicorn.run('main:app', reload=True)
